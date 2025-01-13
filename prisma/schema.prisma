@@ -10,10 +10,21 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
     id    String  @id @default(cuid())
     email String  @unique
     firstName  String
     lastName  String?
     imageUrl String?
+    accounts Account[]
+}
+
+model Account {
+    id    String  @id @default(cuid())
+    userId  String
+    email String 
+    name String
+    accessToken String @unique
+
+    user User @relation(fields: [userId], references: [id])
 }
